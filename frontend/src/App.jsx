@@ -69,9 +69,12 @@ const App = () => {
   const handlePolygonComplete = async (polygon) => {
     console.log("🚀 ~ handlePolygonComplete ~ polygon:", polygon);
     try {
-      await axios.post("http://localhost:5000/api/polygons", {
-        coordinates: polygon,
-      });
+      await axios.post(
+        "https://coordinatesapp-wtwi.onrender.com/api/polygons",
+        {
+          coordinates: polygon,
+        }
+      );
       setPolygons([...polygons, { coordinates: polygon }]); // Update state
     } catch (error) {
       console.error("Error saving polygon:", error);
@@ -81,7 +84,7 @@ const App = () => {
   // Fetch polygons from MongoDB
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/polygons")
+      .get("https://coordinatesapp-wtwi.onrender.com/api/polygons")
       .then((response) => setPolygons(response.data))
       .catch((error) => console.error("Error fetching polygons:", error));
   }, []);
@@ -108,10 +111,13 @@ const App = () => {
   // Fetch route from OpenRouteService API
   const getRoute = async (start, end) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/getRoute", {
-        start,
-        end,
-      });
+      const response = await axios.post(
+        "https://coordinatesapp-wtwi.onrender.com/api/getRoute",
+        {
+          start,
+          end,
+        }
+      );
       console.log("🚀 ~ getRoute ~ response:", response);
       const coordinates = response.data.features[0].geometry.coordinates.map(
         (coord) => [coord[1], coord[0]]
